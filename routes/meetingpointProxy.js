@@ -1,20 +1,43 @@
 const express = require('express')
 const router = express.Router()
-const request = require('request')
+const httpntlm = require('httpntlm')
 const iconv = require('iconv-lite')
+
+const username = process.env.username
+const password = process.env.password
+const domain = 'MCO'
 
 router.get('/:url', function (req, res, next) {
   const baseURL = process.env.SCHOOL_LEVEL === 'mavo'
-      ? 'https://kiemmrooster.msa.nl'
-      : 'https://mmlrooster.msa.nl';
+    ? 'https://kiemmrooster.msa.nl'
+    : 'https://mmlrooster.msa.nl'
+
   const url = `${baseURL}/${req.params.url}`
-  request(url, { encoding: null }, function (err, data) {
+
+  console.log('Proxy requesting:', url)
+
+  httpntlm.get({
+    url: url,
+    username: username,
+    password: password,
+    domain: domain,
+    workstation: 'ROOSTER',
+    strictSSL: false,
+    rejectUnauthorized: false
+  }, function (err, data) {
     if (err) {
+      console.error('Meetingpoint proxy error:', err)
       next(err)
       return
     }
 
-    const utf8Body = iconv.decode(data.body, 'ISO-8859-1')
+    console.log('Proxy upstream status:', data.statusCode)
+
+    const utf8Body = iconv.decode(
+      Buffer.from(data.body),
+      'ISO-8859-1'
+    )
+
     res.status(data.statusCode).end(utf8Body)
   })
 })
