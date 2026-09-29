@@ -1,6 +1,6 @@
-<img src="public/icons/res/mipmap-xhdpi/ic_launcher.png" alt="" align="right" height="70px">
+<img src="public-metis/icons/res/mipmap-xhdpi/ic_launcher.png" alt="" align="right" height="70px">
 
-# Metis Rooster - [rooster.hetmml.nl](http://rooster.hetmml.nl/)
+# Metis Rooster - [rooster.ladde.eu](https://rooster.ladde.eu)
 The search engine of the MML Schedule page
 
-![Screenshot of page](https://noahloomans.com/assets/projects/rooster.hetmml.nl.png/)
+![Screenshot of page](https://noahloomans.com/assets/projects/rooster.hetmml.nl.png)
